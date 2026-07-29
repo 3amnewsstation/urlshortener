@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>URL Shortener Gratis</h1>
+  <input type="text" id="longUrl" placeholder="Tempel URL panjang">
+  <input type="text" id="slug" placeholder="Custom kode (opsional)">
+  <button onclick="shorten()">Buat Link</button>
+  <p id="result"></p>
+
+  <script>
+    async function shorten() {
+      const url = document.getElementById('longUrl').value;
+      const slug = document.getElementById('slug').value || Math.random().toString(36).substr(2, 5);
+      
+      const res = await fetch('/api/shorten', {
+        method: 'POST',
+        body: JSON.stringify({ url, slug })
+      });
+      
+      if (res.ok) {
+        document.getElementById('result').innerText = `Link kamu: ${window.location.origin}/${slug}`;
+      }
+    }
+  </script>
+</body>
+</html>
